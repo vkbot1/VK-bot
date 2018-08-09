@@ -7,57 +7,17 @@ define('VK_REQUEST', '
 
 ');}
 
-require_once("config.php");
-require_once("bot/Bot.php");
+require_once("Event.php");
 
 if (!DEBAG){
     if (!isset($_REQUEST)) {
       exit;
     }
-    $event = json_decode(file_get_contents('php://input'), true);
-    if($event['secret'] != SECRET ){
-        _callback_response('No access');
-    }
+    $event = new Event(json_decode(file_get_contents('php://input'), true));
 }
 else{
-     $event = json_decode(VK_REQUEST, true);
+    $event = new Event(json_decode(VK_REQUEST, true));
 }
 
+$event->run();
 
-
-
-switch ($event['type']) {
-    //Подтверждение сервера
-    case 'confirmation':
-        _callback_handleConfirmation();
-        break;
-    //Получение нового сообщения
-    case 'message_new':
-        _callback_handleMessageNew($event['object']);
-        break;
-    default:
-        _callback_response('Unsupported event');
-        break;
-}
-
-function _callback_response($data) {
-    echo $data;
-    exit();
-}
-
-function _callback_handleConfirmation() {
-  _callback_response(CALLBACK_API_CONFIRMATION_TOKEN);
-}
-
-function _callback_handleMessageNew($data) {
-   /* $command = require_once ('comand.php');
-    foreach ($this->routes as $uriPattern => $path){
-	if (preg_match("~$uriPattern~", $uri)){
-            $internalRoutre = preg_replace("~$uriPattern~", $path, $uri);
-        }
-    }/*
-    bot_sendMessage();*/
-    $bot = new Bot();
-    
-    _callback_response('ok');
-}
