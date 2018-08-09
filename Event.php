@@ -14,14 +14,15 @@ class Event{
     }
 
     public function run(){
-        switch ($parameters['type']) {
+        
+        switch ($this->parameters['type']) {
             //Подтверждение сервера
             case 'confirmation':
                 Event::callbackHandleConfirmation();
                 break;
             //Получение нового сообщения
             case 'message_new':
-                Event::callbackHandleMessageNew($parameters['object']);
+                Event::callbackHandleMessageNew($this->parameters['object']);
                 break;
             default:
                 Event::callbackResponse('Unsupported event');
@@ -42,7 +43,7 @@ class Event{
     }
 
     private function callbackHandleConfirmation() {
-      Event::callback_response(CALLBACK_API_CONFIRMATION_TOKEN);
+      Event::callbackResponse(CALLBACK_API_CONFIRMATION_TOKEN);
     }
 
     private function callbackHandleMessageNew($data) {
@@ -54,6 +55,6 @@ class Event{
         }/*
         bot_sendMessage();*/
         $bot = new Bot();      
-        Event::callback_response('ok');
+        Event::callbackResponse('ok');
     }
 }

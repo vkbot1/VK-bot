@@ -1,23 +1,31 @@
 <?php
-define('DEBAG', 'true');
+define('DEBAG', false);
 if (DEBAG){
-define('VK_REQUEST', '
+    echo "deb<br>";
+    define('VK_REQUEST', '
 
-{"type":"message_new","object":{"id":155,"date":1533483430,"out":0,"user_id":166109160,"read_state":0,"title":"","body":"ff"},"group_id":168097314,"secret":"jrtior3gsgy5y64j46v66v4466yyhu57"}
+    {"type":"confirmation","group_id":169785074,"secret":"jwbvhwhbvwiubvhwiuvbwiub4yy8ewgbf7evfiv4i7f"}
 
-');}
+    ');
+    function DEBAG_write($data)
+    {
+        echo "<pre>";
+        print_r( $data);
+        echo "</pre";
+    }
+}
 
 require_once("Event.php");
 
-if (!DEBAG){
+if (DEBAG){
+    $dataEvent = json_decode(VK_REQUEST, true);
+}
+else{
     if (!isset($_REQUEST)) {
       exit;
     }
-    $event = new Event(json_decode(file_get_contents('php://input'), true));
+    $dataEvent = json_decode(file_get_contents('php://input'), true);
 }
-else{
-    $event = new Event(json_decode(VK_REQUEST, true));
-}
-
+$event = new Event($dataEvent);
 $event->run();
 
