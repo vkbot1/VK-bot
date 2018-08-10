@@ -3,7 +3,7 @@ define('PATH_CONFIG' , "config/config_VK_CALLBACK_API.php");
 /**
  * 
  */
-class VkKey
+final class VkKey
 {
 	private $secretKey;
 	private $groupId;

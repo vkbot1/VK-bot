@@ -28,7 +28,7 @@ else{
     }
     $dataEvent = json_decode(file_get_contents('php://input'), true);
 }
- /*
+ 
 $event = new Event($dataEvent);
 $event->execute();
-*/
+

@@ -1,10 +1,12 @@
 <?php
 
 class Event{
-    var $parameters;
+    private $parameters;
+    private $vkKey;
     
     public function __construct($parameters){
-        $this->setParameters($parameters);
+        $this->vkKey = new VkKey();
+        $this->setParameters($parameters);       
     }
 
     public function execute(){
@@ -25,8 +27,8 @@ class Event{
         Event::callbackResponse('ok');
     }
 
-    static protected function isSecret($data){
-        return $data == VK_CALLBACK_API_SECRET_KEY;
+    protected function isSecret($data){
+        return $data == $this->vkKey->getSecretKey();
     }
 
     public function setParameters($parameters){
@@ -43,7 +45,7 @@ class Event{
     }
 
     protected function confirmation() {
-        Event::callbackResponse(VK_CALLBACK_API_CONFIRMATION_KEY);
+        Event::callbackResponse($this->vkKey->ConfirmationKey());
     }
 
     protected function messageNew($data) {
