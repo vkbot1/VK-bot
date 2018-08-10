@@ -1,15 +1,10 @@
 <?php
 
-
 class Event{
     var $parameters;
     
     public function __construct($parameters){
-        //проверка секретного ключа
-        if (Event::isSecret($parameters['secret'])){
-            $this->parameters = $parameters;
-        }
-        else Event::callbackResponse('No access');
+        $this->setParameters($parameters);
     }
 
     public function execute(){
@@ -27,28 +22,33 @@ class Event{
                 Event::callbackResponse('Unsupported event');
                 break;
         }
+        Event::callbackResponse('ok');
     }
 
-    static function isSecret($data){
-        if($data == VkKey::$SECRET ){
-            return true;
+    static protected function isSecret($data){
+        return $data == VK_CALLBACK_API_SECRET_KEY;
+    }
+
+    public function setParameters($parameters){
+        //проверка секретного ключа
+        if (Event::isSecret($parameters['secret'])){
+            $this->parameters = $parameters;
         }
-        return false;
+        else Event::callbackResponse('No access');
     }
 
-    private function callbackResponse($data) {
+    protected function callbackResponse($data) {
         echo $data;
         exit();
     }
 
-    private function confirmation() {
-        Event::callbackResponse(CALLBACK_API_CONFIRMATION_TOKEN);
+    protected function confirmation() {
+        Event::callbackResponse(VK_CALLBACK_API_CONFIRMATION_KEY);
     }
 
-    private function messageNew($data) {
+    protected function messageNew($data) {
 /*
         $bot = new Bot(NAME_BOT, $data);      
-        $bot->execute();
-        Event::callbackResponse('ok');*/
+        $bot->execute();*/
     }
 }

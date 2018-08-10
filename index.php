@@ -20,7 +20,7 @@ require_once("system/autoload.php");
 //парс входящих данных
 if (DEBAG){
     $dataEvent = json_decode(VK_REQUEST, true);
-    DEBAG_write($dataEvent);
+    //DEBAG_write($dataEvent);
 }
 else{
     if (!isset($_REQUEST)) {
@@ -28,8 +28,7 @@ else{
     }
     $dataEvent = json_decode(file_get_contents('php://input'), true);
 }
-
-
+ /*
 $event = new Event($dataEvent);
 $event->execute();
-
+*/
