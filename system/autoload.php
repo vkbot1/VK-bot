@@ -4,12 +4,12 @@ function __autoload($class_name)
 	$dirs = getDirs(".");
 	foreach ($dirs as $path) {
 		$files = $path .DIRECTORY_SEPARATOR. lcfirst($class_name) . '.php';
-		if(DEBAG){
+		/*if(DEBAG){
 			DEBAG_write($class_name);
 			DEBAG_write($path);
 			DEBAG_write($files);
 			echo "<br>";
-		}
+		}*/
 		if(is_file($files)){
 			require_once $files;
 			return;
