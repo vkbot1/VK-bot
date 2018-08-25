@@ -1,23 +1,33 @@
 <?php 
-	function __autoload($class_name)
-	{
-		$array_paths = array(
-			'system/',
-			'bot/',
-			'VK_API/',
-		);
-
-		foreach ($array_paths as $path) {
-			$_path = $path . strtolower($class_name) . '.php';
-			/*if(DEBAG){
-				DEBAG_write($class_name);
-				DEBAG_write($path);
-				DEBAG_write($_path);
-				echo "<br>";
-			}*/
-			if(is_file($_path)){
-				require_once $_path;
-				return;
-			}
+function __autoload($class_name)
+{
+	$dirs = getDirs(".");
+	foreach ($dirs as $path) {
+		$files = $path .DIRECTORY_SEPARATOR. strtolower($class_name) . '.php';
+		/*if(DEBAG){
+			DEBAG_write($class_name);
+			DEBAG_write($path);
+			DEBAG_write($files);
+			echo "<br>";
+		}*/
+		if(is_file($files)){
+			require_once $files;
+			return;
 		}
 	}
+}
+
+function getDirs($dir, &$results = array()){
+    $files = scandir($dir);
+
+    foreach($files as $key => $value){
+        $path = realpath($dir.DIRECTORY_SEPARATOR.$value);
+        if(is_dir($path)) {
+            if($value != "." && $value != "..") {
+                getDirs($path, $results);
+                $results[] = $path;
+            }
+        }
+    }
+    return $results;
+}
