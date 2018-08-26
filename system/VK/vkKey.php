@@ -46,4 +46,7 @@ final class VkKey
 	public function getAccessKey_KEY(){
 		return $this->accessKey; 
 	}
+    public function isSecret($data){
+        return $data == $this->secretKey;
+    }
 }

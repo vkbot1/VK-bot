@@ -19,16 +19,15 @@ require_once("system/autoload.php");
 
 //парс входящих данных
 if (DEBAG){
-    $dataEvent = json_decode(VK_REQUEST, true);
+    $dataEvent = new VkRequest(json_decode(VK_REQUEST, true));
     //DEBAG_write($dataEvent);
 }
 else{
     if (!isset($_REQUEST)) {
       exit;
     }
-    $dataEvent = json_decode(file_get_contents('php://input'), true);
+    $dataEvent = new VkRequest(json_decode(file_get_contents('php://input'), true));
 }
- 
 $event = new Event($dataEvent);
 $event->execute();
 

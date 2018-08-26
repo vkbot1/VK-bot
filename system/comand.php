@@ -1,8 +1,8 @@
 <?php
 class Comand{
-	private $comand, // командa
-			$method, //вызываемый обработчик	
-			$description; //описание команды
+	protected 	$comand, // командa
+				$method, //вызываемый обработчик	
+				$description; //описание команды
 
 	public function __construct($comand, $method, $description){
 		$this->comand = $comand;

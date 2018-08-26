@@ -1,24 +1,24 @@
 <?php
 
 class Event{
-    private $parameters;
-    private $vkKey;
+    protected $vkRequest;
+    protected $vkKey;
     
-    public function __construct($parameters){
+    public function __construct($vkRequest){
         $this->vkKey = new VkKey();
-        $this->setParameters($parameters);       
+        $this->setParameters($vkRequest);       
     }
 
     public function execute(){
         
-        switch ($this->parameters['type']) {
+        switch ($this->vkRequest->getType()) {
             //ВК подтвержддает сервер 
             case 'confirmation':
                 Event::confirmation();
                 break;
             //Получение нового сообщения
             case 'message_new':
-                Event::messageNew($this->parameters['object']);
+                Event::messageNew($this->vkRequest->getObject());
                 break;
             default:
                 Event::callbackResponse('Unsupported event');
@@ -27,25 +27,25 @@ class Event{
         Event::callbackResponse('ok');
     }
 
-    protected function isSecret($data){
-        return $data == $this->vkKey->getSecretKey();
-    }
 
-    public function setParameters($parameters){
+    public function setParameters($vkRequest){
         //проверка секретного ключа
-        if (Event::isSecret($parameters['secret'])){
-            $this->parameters = $parameters;
+        if ($this->vkKey->isSecret($vkRequest->getSecret())){
+            $this->vkRequest = $vkRequest;
         }
         else Event::callbackResponse('No access');
     }
 
+    /*
+    * ответ вк
+    */
     protected function callbackResponse($data) {
         echo $data;
         exit();
     }
 
     protected function confirmation() {
-        Event::callbackResponse($this->vkKey->ConfirmationKey());
+        Event::callbackResponse($this->vkKey->getConfirmationKey());
     }
 
     protected function messageNew($data) {
