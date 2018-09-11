@@ -10,3 +10,4 @@ RewriteRule ^ index.php [QSA,L]
 RewriteBase /
 
 RewriteCond %{REQUEST_URI} !^.{1,}\.(js|css|jpg|png|ico)$
+AddDefaultCharset UTF-8
