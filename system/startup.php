@@ -14,6 +14,11 @@ else{
 //D_write($vkRequest);
 
 require_once("config.php");
+require_once(DIR_SYSTEM . "config.php");
+
+//autoload
+require_once(DIR_SYSTEM . "autoload.php");
+
 
 /*
 require_once("system/config.php");
