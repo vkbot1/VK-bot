@@ -1,4 +1,9 @@
 <?php
+
+//DIR
+
+
+//VK
 define('VK_CALLBACK_API_SECRET_KEY' , 'jwbvhwhbvwiubvhwiuvbwiub4yy8ewgbf7evfiv4i7f'); //секретный ключ 
 define('VK_CALLBACK_API_GROUP_ID' , '169785074'); // id сообщества
 define('VK_CALLBACK_API_CONFIRMATION_KEY', '73a9fc61'); //Строка для подтверждения адреса сервера из настроек Callback API

@@ -1,5 +1,6 @@
 RewriteEngine On
 
+#php_value error_reporting "E_ALL & ~E_NOTICE"
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
